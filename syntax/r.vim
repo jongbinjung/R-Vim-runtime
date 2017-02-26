@@ -5,7 +5,7 @@
 " 		      Tom Payne <tom@tompayne.org>
 " Contributor:        Johannes Ranke <jranke@uni-bremen.de>
 " Homepage:           https://github.com/jalvesaq/R-Vim-runtime
-" Last Change:	      Thu Nov 12, 2016
+" Last Change:	      Sat Feb 25, 2017  09:15PM
 " Filenames:	      *.R *.r *.Rhistory *.Rt
 "
 " NOTE: The highlighting of R functions is defined in
@@ -259,12 +259,16 @@ syn match rBraceError "[)}]" contained
 syn match rCurlyError "[)\]]" contained
 syn match rParenError "[\]}]" contained
 
-if !exists("g:R_hi_fun")
-  let g:R_hi_fun = 1
-endif
-if g:R_hi_fun
-  " Nvim-R:
-  runtime R/functions.vim
+if exists("g:r_syntax_fun_pattern") && g:r_syntax_fun_pattern == 1
+  syn match rFunction '[0-9a-zA-Z_\.]\+\s*\ze('
+else
+  if !exists("g:R_hi_fun")
+    let g:R_hi_fun = 1
+  endif
+  if g:R_hi_fun
+    " Nvim-R:
+    runtime R/functions.vim
+  endif
 endif
 
 syn match rDollar display contained "\$"
